@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Grid from 'material-ui/Grid'
-import Button from 'material-ui/Button'
 import ViewDay from 'material-ui-icons/ViewList'
 import ViewWeek from 'material-ui-icons/ViewWeek'
 import ViewMonth from 'material-ui-icons/ViewModule'
+import BottomNavigation, { BottomNavigationButton } from 'material-ui/BottomNavigation'
 
+import { capitalize } from '../libs/'
 import { ViewsTypes } from '../constants/'
 
 const components = ViewsTypes.reduce((res, item) => {
@@ -24,31 +24,25 @@ const components = ViewsTypes.reduce((res, item) => {
 	return res;
 }, {});
 
-const CalendarView = props => {
+const CalendarBarRight = props => {
 	const { classes, currentView } = props
 
-	const onChangeView = (view) => props.onChangeView(view)
-	const currentColor = (period) => currentView === period ? 'accent' : 'default'
+	const onChangeView = (event, view) => props.onChangeView(view)
 
-	return <Grid container>
-		{ViewsTypes.map((item, idx) =>
-			<Button
-				key={idx}
-				aria-label={item}
-				className={classes.button}
-				color={currentColor(item)}
-				onClick={() => onChangeView(item)}>
-				{components[item]}
-			</Button>
-		)}
-	</Grid>
+	return <BottomNavigation
+		value={currentView}
+		onChange={onChangeView}
+		className={classes.root}
+	>
+		{ViewsTypes.map((item, idx) => <BottomNavigationButton key={idx} label={capitalize(item)} value={item} icon={components[item]} />)}
+	</BottomNavigation>
 };
 
 
-CalendarView.propTypes = {
+CalendarBarRight.propTypes = {
 	classes: PropTypes.object.isRequired,
 	currentView: PropTypes.oneOf(ViewsTypes).isRequired,
 	onChangeView: PropTypes.func.isRequired
 };
 
-export default CalendarView
+export default CalendarBarRight

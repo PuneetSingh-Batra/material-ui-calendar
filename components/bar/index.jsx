@@ -1,21 +1,28 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Grid from 'material-ui/Grid'
-import CalendarView from './view'
-import CalendarCation from './caption'
+import CalendarBarRight from './right'
+import CalendarBarCation from './caption'
 
-// TODO need change view and alligment component by center
-const CalendarBar = props => (
-	<Grid container spacing={8}>
+const CalendarBar = props => {
+	const { leftBarContent, rightBarContent, captionBarContent } = props
+	return <Grid container spacing={8}>
 		<Grid item xs>
-			<div> Left </div>
+			{leftBarContent}
 		</Grid>
 		<Grid item xs={6}>
-			<CalendarCation {...props} />
+			{rightBarContent || <CalendarBarCation {...props} />}
 		</Grid>
 		<Grid item xs>
-			<CalendarView {...props} />
+			{captionBarContent || <CalendarBarRight {...props} />}
 		</Grid>
 	</Grid >
-)
+}
+
+CalendarBar.propTypes = {
+	leftBarContent: PropTypes.element,
+	rightBarContent: PropTypes.element,
+	captionBarContent: PropTypes.element,
+}
 
 export default CalendarBar

@@ -8,53 +8,55 @@ import moment from 'moment'
 
 import { ViewsTypes } from '../constants/'
 
-const caption = (props) => {
-	const currentDate = moment(props.currentDate)
-	switch (props.currentView) {
-		case 'day':
-			return currentDate.format(props.formatDay)
-		case 'week':
-			const week = props.useIsoWeek ? 'isoWeek' : 'week';
-			return `${currentDate.clone().startOf(week).format(props.formatWeek)} - ${currentDate.clone().endOf(week).format(props.formatWeek)}`
-		case 'month':
-			return `${currentDate.clone().startOf('month').format(props.formatWeek)} - ${currentDate.clone().endOf('month').format(props.formatWeek)}`
+
+
+const CalendarBarCation = props => {
+
+	const { classes, currentDate, formatBarDay, formatBarWeek, useIsoWeek, currentView, onNext, onChangeDate } = props
+
+	const onNextOrPrev = next => {
+		if (onNext) {
+			return onNext()
+		}
+		onChangeDate(+moment(currentDate).add(next ? 1 : -1, currentView));
 	}
-	return '';
-}
 
-const onNextOrPrev = (next, props) => {
-	if (props.onNext) {
-		return props.onNext()
+	const caption = () => {
+		const date = moment(currentDate)
+		switch (currentView) {
+			case 'day':
+				return date.format(formatBarDay)
+			case 'week':
+				const week = useIsoWeek ? 'isoWeek' : 'week';
+				return `${date.clone().startOf(week).format(formatBarWeek)} - ${date.clone().endOf(week).format(formatBarWeek)}`
+			case 'month':
+				return `${date.clone().startOf('month').format(formatBarWeek)} - ${date.clone().endOf('month').format(formatBarWeek)}`
+		}
+		return '';
 	}
-	props.onChangeDate(+moment(props.currentDate).add(next ? 1 : -1, props.currentView));
-}
 
-const CalendarCaption = props => {
-
-	const { classes } = props
-
-	return 			<Grid container align="center" direction="row" justify="center" >
-		<Button className={classes.button} onClick={() => onNextOrPrev(false, props)}>
+	return <Grid container align="center" direction="row" justify="center" >
+		<Button className={classes.button} onClick={() => onNextOrPrev(false)}>
 			<Back />
 		</Button>
 		<Button className={classes.button}>{caption(props)}</Button>
-		<Button className={classes.button} onClick={() => onNextOrPrev(true, props)}>
+		<Button className={classes.button} onClick={() => onNextOrPrev(true)}>
 			<Forward />
 		</Button>
 	</Grid>
 }
 
-CalendarCaption.ProtoType = {
+CalendarBarCation.propTypes = {
 	classes: PropTypes.object.isRequired,
-	formatDay: PropTypes.string.isRequired,
+	formatBarDay: PropTypes.string.isRequired,
 	onChangeDate: PropTypes.func.isRequired,
-	formatWeek: PropTypes.string.isRequired,
-	currentView: PropTypes.string.isRequired,
-	currentDate: PropTypes.oneOf(ViewsTypes).isRequired,
+	formatBarWeek: PropTypes.string.isRequired,
+	currentView: PropTypes.oneOf(ViewsTypes).isRequired,
+	currentDate: PropTypes.number.isRequired,
 	useIsoWeek: PropTypes.bool,
 	onNext: PropTypes.func,
 	onDate: PropTypes.func,
 	onPreviously: PropTypes.func,
 }
 
-export default CalendarCaption
+export default CalendarBarCation
