@@ -1,17 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import CalendarBar from './bar/'
-import CalendarHeader from './header/'
+import CalendarBar from './bar'
+import CalendarHeader from './header'
+import CalendarViews from './views'
 import { withStyles } from 'material-ui/styles'
 
-import { ViewsTypes } from './constants/'
+import { ViewsTypes } from './constants'
 
-const styles = () => ({});
+const styles = theme => ({
+	root: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		justifyContent: 'space-around',
+		overflow: 'hidden',
+		background: theme.palette.background.paper,
+	}
+});
 
 const CalendarMaterial = props => (
 	<div>
 		<CalendarBar {...props} />
 		<CalendarHeader {...props} />
+		<CalendarViews {...props} />
 	</div>
 )
 
@@ -21,7 +31,8 @@ CalendarMaterial.defaultProps = {
 	formatBarWeek: 'MMM Do YYYY',
 	formatHeaderDay: 'dddd Do',
 	currentDate: new Date().getTime(),
-	useIsoWeek: false
+	useIsoWeek: false,
+	usageAMPM: true,
 }
 
 CalendarMaterial.propTypes = {
@@ -33,6 +44,7 @@ CalendarMaterial.propTypes = {
 	currentView: PropTypes.oneOf(ViewsTypes).isRequired,
 	onChangeView: PropTypes.func.isRequired,
 	onChangeDate: PropTypes.func.isRequired,
+	usageAMPM: PropTypes.bool,
 	onNext: PropTypes.func,
 	onDate: PropTypes.func,
 	useIsoWeek: PropTypes.bool,

@@ -13,7 +13,7 @@ const CalendarHeader = props => {
 		const date = moment(currentDate);
 		switch (currentView) {
 			case 'day':
-				return ['', date.format(formatHeaderDay)];
+				return [date.format(formatHeaderDay)];
 			case 'week':
 				const startDate = date.clone().startOf(useIsoWeek ? 'isoWeek' : 'week')
 				return Array(7).fill('').map((e, i) => startDate.clone().add(i, 'day').format(formatHeaderDay))
@@ -28,6 +28,7 @@ const CalendarHeader = props => {
 		align="center"
 		direction="row"
 		justify="space-around">
+		<Grid item></Grid>
 		{colomns().map((item, idx) => <Grid item key={idx}>{item}</Grid>)}
 	</Grid>
 }
