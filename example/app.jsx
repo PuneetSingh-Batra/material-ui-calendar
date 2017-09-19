@@ -12,6 +12,7 @@ export default class App extends React.Component {
 
 		this.changeView = this.changeView.bind(this)
 		this.onChangeDate = this.onChangeDate.bind(this)
+		this.onClickEvent = this.onClickEvent.bind(this)
 	}
 
 	changeView(current) {
@@ -21,6 +22,9 @@ export default class App extends React.Component {
 	onChangeDate(newDate) {
 		this.setState({ currentDate: newDate })
 	}
+	onClickEvent(time) {
+		console.log(time);
+	}
 
 	render() {
 		return <div>
@@ -28,6 +32,7 @@ export default class App extends React.Component {
 				{...this.state}
 				onChangeDate={this.onChangeDate}
 				onChangeView={this.changeView}
+				onClickEvent={this.onClickEvent}
 			/>
 		</div>
 	}

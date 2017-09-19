@@ -49,6 +49,7 @@ CalendarMaterial.propTypes = {
 	onDate: PropTypes.func,
 	useIsoWeek: PropTypes.bool,
 	onPreviously: PropTypes.func,
+	onClickEvent: PropTypes.func,
 }
 
 export default withStyles(styles)(CalendarMaterial)
