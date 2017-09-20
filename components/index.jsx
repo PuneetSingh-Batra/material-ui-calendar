@@ -7,14 +7,16 @@ import { withStyles } from 'material-ui/styles'
 
 import { ViewsTypes } from './constants'
 
-const styles = theme => ({
-	root: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'space-around',
-		overflow: 'hidden',
-		background: theme.palette.background.paper,
-	}
+const styles = () => ({
+	gridLine: {
+		width: '100%',
+		'&:hover': {
+			backgroundColor: 'rgba(0,0,0,0.1)',
+		},
+	},
+	gridRow: {
+		width: '100%'
+	},
 });
 
 const CalendarMaterial = props => (

@@ -1,4 +1,4 @@
-import momemt from 'moment'
+import moment from 'moment'
 
 /**
  * Captilize string
@@ -25,10 +25,11 @@ export function capitalize(str) {
  */
 export function gridHours(format) {
 	const result = [];
-	const date = momemt().startOf('day')
+	const startDate = moment().startOf('day')
 
 	for (let i = 0; i < 24; i++) {
-		result.push(date.clone().add(i, 'hours').format(format));
+		const date = startDate.clone().add(i, 'hour')
+		result.push({ title: date.format(format), value: moment(date, format).valueOf() - startDate.valueOf() });
 	}
 
 	return result;
